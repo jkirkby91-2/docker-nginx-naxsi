@@ -82,4 +82,10 @@ COPY start.sh /start.sh
 
 RUN chmod 777 /start.sh
 
+RUN chown -Rf www-data:www-data /srv
+
+RUN chmod -Rf 644 /srv
+
+WORKDIR /srv
+
 CMD ["/bin/bash", "/start.sh"]
