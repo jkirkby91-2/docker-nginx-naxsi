@@ -30,7 +30,7 @@ RUN tar xzf 0.55.2.tar.gz
 WORKDIR  nginx-1.11.9
 
 RUN ./configure --conf-path=/etc/nginx/nginx.conf \
-  --add-module=../naxsi-${latestNaxsi}/naxsi_src/ \
+  --add-module=../naxsi-0.55.2/naxsi_src/ \
   --error-log-path=/var/log/nginx/error.log \
   --http-client-body-temp-path=/var/lib/nginx/body \
   --http-fastcgi-temp-path=/var/lib/nginx/fastcgi \
@@ -50,11 +50,10 @@ RUN ./configure --conf-path=/etc/nginx/nginx.conf \
   --without-mail_imap_module \
   --without-http_uwsgi_module \
   --without-http_scgi_module \
-  --prefix=/usr
-
-RUN make -j 4
-
-RUN make install
+  --prefix=/usr && \
+  make -j 4 && \
+  make install && \
+  mkdir -p /var/lib/nginx/{body,proxy}
 
 RUN cp /etc/fail2ban/jail.conf /etc/fail2ban/jail.local
 
