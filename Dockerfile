@@ -29,37 +29,53 @@ RUN tar xzf 0.55.2.tar.gz
 
 WORKDIR  nginx-1.11.9
 
-RUN ./configure --conf-path=/etc/nginx/nginx.conf \
+RUN groupadd -r nginx && useradd -r -g nginx nginx
+
+RUN ./configure \
+  --with-pcre \
+  --with-ipv6 \
+  --user=nginx \
+  --group=nginx \
+  --with-stream \
+  --with-file-aio \
+  --with-poll_module \
+  --with-http_v2_module \
+  --with-http_ssl_module \
+  --with-stream_ssl_module \
+  --with-http_realip_module \
+  --pid-path=/run/nginx.pid \
+  --prefix=/usr/local/nginx \
+  --without-http_uwsgi_module \
+  --with-stream_realip_module \
+  --pid-path=/var/run/nginx.pid \
+  --with-http_gzip_static_module \
+  --with-google_perftools_module \
+  --lock-path=/var/lock/nginx.lock \
+  --conf-path=/etc/nginx/nginx.conf \
+  --sbin-path=/usr/local/sbin/nginx \
+  --lock-path=/run/lock/subsys/nginx \
   --add-module=../naxsi-0.55.2/naxsi_src/ \
   --error-log-path=/var/log/nginx/error.log \
-  --http-client-body-temp-path=/var/lib/nginx/body \
-  --http-fastcgi-temp-path=/var/lib/nginx/fastcgi \
   --http-log-path=/var/log/nginx/access.log \
   --http-proxy-temp-path=/var/lib/nginx/proxy \
-  --lock-path=/var/lock/nginx.lock \
-  --pid-path=/var/run/nginx.pid \
-  --with-http_ssl_module \
-  --with-http_v2_module \
-  --with-http_realip_module \
-  --with-stream \
-  --with-stream_realip_module \
-  --with-stream_ssl_module \
-  --with-google_perftools_module \
+  --http-client-body-temp-path=/var/lib/nginx/body \
+  --http-fastcgi-temp-path=/var/lib/nginx/fastcgi \
   --without-mail_pop3_module \
   --without-mail_smtp_module \
   --without-mail_imap_module \
-  --without-http_uwsgi_module \
   --without-http_scgi_module \
   --prefix=/usr && \
   make -j 4 && \
   make install && \
-  mkdir -p /var/lib/nginx/{body,proxy}
+  mkdir -p /var/lib/nginx/{body,proxy,fastcgi}
 
 RUN cp /etc/fail2ban/jail.conf /etc/fail2ban/jail.local
 
 RUN touch /etc/fail2ban/filter.d/nginx-req-limit.conf
 
 COPY confs/nginx-req-limit.conf /etc/fail2ban/filter.d/nginx-req-limit.conf
+
+COPY confs/apparmor/nginx.conf /etc/apparmor/nginx.conf
 
 COPY confs/jail1.conf /tmp/jail.conf
 
@@ -85,6 +101,12 @@ RUN chown -Rf www-data:www-data /srv
 
 RUN chmod -Rf 644 /srv
 
-WORKDIR /srv
+RUN touch /var/log/nginx/error.log
+
+RUN touch /var/log/nginx/access.log
+
+WORKDIR /data
+
+USER nginx
 
 CMD ["/bin/bash", "/start.sh"]
