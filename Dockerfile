@@ -47,6 +47,8 @@ RUN usermod -u 1000 www-data
 
 RUN chown -Rf www-data:www-data /srv
 
+RUN chmod 755 /srv
+
 RUN find /srv -type d -exec chmod 755 {} \;
 
 RUN find /srv -type f -exec chmod 644 {} \;
