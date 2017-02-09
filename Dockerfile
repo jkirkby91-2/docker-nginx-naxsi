@@ -43,9 +43,13 @@ COPY start.sh /start.sh
 
 RUN chmod 777 /start.sh
 
+RUN usermod -u 1000 www-data
+
 RUN chown -Rf www-data:www-data /srv
 
-RUN chmod -Rf 644 /srv
+RUN find /srv -type d -exec chmod 755 {} \;
+
+RUN find /srv -type f -exec chmod 644 {} \;
 
 RUN touch /var/log/nginx/error.log
 
