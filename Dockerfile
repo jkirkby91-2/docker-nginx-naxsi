@@ -105,8 +105,4 @@ RUN touch /var/log/nginx/error.log
 
 RUN touch /var/log/nginx/access.log
 
-WORKDIR /data
-
-USER nginx
-
 CMD ["/bin/bash", "/start.sh"]
