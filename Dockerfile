@@ -55,6 +55,7 @@ touch /srv/log/nginx.error.log && \
 chown -Rf www-data:www-data /srv && \
 chmod 755 /srv && \
 find /srv -type d -exec chmod 755 {} \; && \
-find /srv -type f -exec chmod 644 {} \;
+find /srv -type f -exec chmod 644 {} \; && \
+chown -Rf www-data:www-data /var/log/nginx
 
 CMD ["/bin/bash", "/start.sh"]
