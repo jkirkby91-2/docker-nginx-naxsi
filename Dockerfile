@@ -40,7 +40,7 @@ COPY confs/fail2ban/nginx-naxsi.conf /etc/fail2ban/filter.d/nginx-naxsi.conf
 
 COPY confs/jail2.conf /tmp/jail.conf
 
-RUN cat /tmp/fail2ban/jail.conf >> /etc/fail2ban/jail.conf
+RUN cat /tmp/jail.conf >> /etc/fail2ban/jail.conf
 
 COPY confs/supervisord.conf /etc/supervisord.conf
 
