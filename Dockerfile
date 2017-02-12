@@ -22,6 +22,8 @@ mkdir -p /srv/www
 
 COPY confs/nginx/naxsi_core.rules /etc/nginx/naxsi_core.rules
 
+COPY confs/nginx/naxsi.rules /etc/nginx/naxsi.rules
+
 RUN cp /etc/fail2ban/jail.conf /etc/fail2ban/jail.local
 
 RUN touch /etc/fail2ban/filter.d/nginx-req-limit.conf
