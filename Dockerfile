@@ -44,6 +44,8 @@ RUN cat /tmp/jail.conf >> /etc/fail2ban/jail.conf
 
 COPY confs/supervisord.conf /etc/supervisord.conf
 
+COPY confs/nginx/nginx.conf /etc/nginx/nginx.conf
+
 COPY start.sh /start.sh
 
 RUN chmod 777 /start.sh
