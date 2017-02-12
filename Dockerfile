@@ -24,9 +24,8 @@ COPY confs/nginx/naxsi_core.rules /etc/nginx/naxsi_core.rules
 
 COPY confs/nginx/naxsi.rules /etc/nginx/naxsi.rules
 
-RUN cp /etc/fail2ban/jail.conf /etc/fail2ban/jail.local
-
-RUN touch /etc/fail2ban/filter.d/nginx-req-limit.conf
+RUN cp /etc/fail2ban/jail.conf /etc/fail2ban/jail.local && \
+touch /etc/fail2ban/filter.d/nginx-req-limit.conf
 
 COPY confs/fail2ban/nginx-req-limit.conf /etc/fail2ban/filter.d/nginx-req-limit.conf
 
@@ -34,15 +33,14 @@ COPY confs/apparmor/nginx.conf /etc/apparmor/nginx.conf
 
 COPY confs/fail2ban/jail1.conf /tmp/jail.conf
 
-RUN cat /tmp/jail.conf >> /etc/fail2ban/jail.local
-
-RUN rm /tmp/jail.conf
+RUN cat /tmp/jail.conf >> /etc/fail2ban/jail.local && \
+rm /tmp/jail.conf
 
 COPY confs/fail2ban/nginx-naxsi.conf /etc/fail2ban/filter.d/nginx-naxsi.conf
 
 COPY confs/jail2.conf /tmp/jail.conf
 
-RUN cat /tmp/jail.conf >> /etc/fail2ban/jail.conf
+RUN cat /tmp/fail2ban/jail.conf >> /etc/fail2ban/jail.conf
 
 COPY confs/supervisord.conf /etc/supervisord.conf
 
@@ -50,20 +48,13 @@ COPY confs/nginx/nginx.conf /etc/nginx/nginx.conf
 
 COPY start.sh /start.sh
 
-RUN chmod 777 /start.sh
-
-RUN usermod -u 1000 www-data
-
-RUN touch /srv/log/nginx.access.log
-
-RUN touch /srv/log/nginx.error.log
-
-RUN chown -Rf www-data:www-data /srv
-
-RUN chmod 755 /srv
-
-RUN find /srv -type d -exec chmod 755 {} \;
-
-RUN find /srv -type f -exec chmod 644 {} \;
+RUN chmod 777 /start.sh && \
+usermod -u 1000 www-data && \
+touch /srv/log/nginx.access.log && \
+touch /srv/log/nginx.error.log && \
+chown -Rf www-data:www-data /srv && \
+chmod 755 /srv && \
+find /srv -type d -exec chmod 755 {} \; && \
+find /srv -type f -exec chmod 644 {} \;
 
 CMD ["/bin/bash", "/start.sh"]
