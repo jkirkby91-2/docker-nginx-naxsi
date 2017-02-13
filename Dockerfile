@@ -29,7 +29,7 @@ touch /etc/fail2ban/filter.d/nginx-req-limit.conf
 
 COPY confs/fail2ban/nginx-req-limit.conf /etc/fail2ban/filter.d/nginx-req-limit.conf
 
-COPY confs/apparmor/nginx.conf /etc/apparmor/nginx.conf
+COPY confs/apparmor/nginx.conf /etc/apparmor.d/nginx.conf
 
 COPY confs/fail2ban/jail1.conf /tmp/jail.conf
 
