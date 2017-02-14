@@ -49,6 +49,7 @@ COPY confs/nginx/nginx.conf /etc/nginx/nginx.conf
 COPY start.sh /start.sh
 
 RUN touch /run/nginx.pid && \
+usermod -u 1000 www-data && \
 chown -Rf www-data:www-data /run/nginx.pid && \
 mkdir /var/lib/nginx/body && \
 mkdir /var/lib/nginx/proxy && \
@@ -57,7 +58,6 @@ mkdir /var/lib/nginx/uwsgi && \
 mkdir /var/lib/nginx/scgi && \
 chown -Rf www-data:www-data /var/lib/nginx/body && \
 chmod 777 /start.sh && \
-usermod -u 1000 www-data && \
 touch /srv/log/nginx.access.log && \
 touch /srv/log/nginx.error.log && \
 chown -Rf www-data:www-data /srv && \
