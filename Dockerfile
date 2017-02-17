@@ -56,7 +56,7 @@ mkdir /var/lib/nginx/proxy && \
 mkdir /var/lib/nginx/fastcgi && \
 mkdir /var/lib/nginx/uwsgi && \
 mkdir /var/lib/nginx/scgi && \
-chown -Rf www-data:www-data /var/lib/nginx/body && \
+chown -Rf www-data:www-data /var/lib/nginx && \
 chmod 777 /start.sh && \
 touch /srv/log/nginx.access.log && \
 touch /srv/log/nginx.error.log && \
