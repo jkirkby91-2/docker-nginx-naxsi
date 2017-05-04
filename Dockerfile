@@ -22,12 +22,6 @@ mkdir -p /srv/confs/nginx && \
 mkdir -p /srv/confs/supervisord && \
 mkdir -p /srv/www
 
-RUN openssl dhparam -out /srv/ssl/dhparam.pem 2048
-
-RUN openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout /srv/ssl/nginx-selfsigned.key -out /srv/ssl/nginx-selfsigned.crt \
-    -subj "/C=UK/ST=London/L=London/O=Dis/CN=localhost" \
-    -keyout /srv/ssl/nginx-selfsigned.key -out /srv/ssl/nginx-selfsigned.crt > /dev/null
-
 COPY confs/nginx/naxsi_core.rules /etc/nginx/naxsi_core.rules
 
 COPY confs/nginx/naxsi.rules /etc/nginx/naxsi.rules
