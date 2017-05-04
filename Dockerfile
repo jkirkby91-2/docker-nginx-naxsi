@@ -1,6 +1,6 @@
 FROM jkirkby91/ubuntusrvbase:latest
 
-MAINTAINER James Kirkby <jkirkby91@gmail.com>
+MAINTAINER James Kirkby <me@jameskirkby.com>
 
 RUN apt-get update && \
 apt-get upgrade -y && \
@@ -18,9 +18,7 @@ RUN mkdir -p /srv/ssl && \
 mkdir -p /srv/log && \
 mkdir -p /srv/log/nginx && \
 mkdir -p /srv/confs && \
-mkdir -p /srv/confs/nginx && \
-mkdir -p /srv/confs/supervisord && \
-mkdir -p /srv/www
+mkdir -p /srv/confs/nginx
 
 COPY confs/nginx/naxsi_core.rules /etc/nginx/naxsi_core.rules
 
@@ -68,7 +66,9 @@ find /srv -type d -exec chmod 755 {} \; && \
 find /srv -type f -exec chmod 644 {} \; && \
 chown -Rf www-data:www-data /var/log/nginx
 
-WORKDIR /srv/www
+WORKDIR /srv
+
+VOLUME ["/srv"]
 
 USER www-data
 
