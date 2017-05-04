@@ -74,4 +74,8 @@ find /srv -type d -exec chmod 755 {} \; && \
 find /srv -type f -exec chmod 644 {} \; && \
 chown -Rf www-data:www-data /var/log/nginx
 
+WORKDIR /srv/www
+
+USER www-data
+
 CMD ["/bin/bash", "/start.sh"]
