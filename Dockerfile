@@ -18,6 +18,8 @@ RUN mkdir -p /srv/ssl && \
 mkdir -p /srv/log && \
 mkdir -p /srv/log/nginx && \
 mkdir -p /srv/confs && \
+mkdir -p /srv/confs/nginx && \
+mkdir -p /srv/confs/supervisord && \
 mkdir -p /srv/www
 
 RUN openssl dhparam -out /srv/ssl/dhparam.pem 2048
