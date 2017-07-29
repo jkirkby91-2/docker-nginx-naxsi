@@ -1,10 +1,22 @@
 FROM jkirkby91/ubuntusrvbase:latest
 
-MAINTAINER James Kirkby <me@jameskirkby.com>
+MAINTAINER James Kirkby <info@watchoutforsnakes.co.uk>
+
+RUN touch /etc/apt/sources.list.d/nginx.list
+
+RUN bash -c 'cat << EOF >> /etc/apt/sources.list.d/nginx.list
+    # jessie-backports, from stretch-level but with no dependencies
+    deb http://httpredir.debian.org/debian/ jessie-backports main contrib non-free
+    deb-src http://httpredir.debian.org/debian/ jessie-backports main contrib non-free
+
+    # Nginx repository - use Ubuntu 16.04 LTS Xenial to get packages compiled with OpenSSL 1.0.2
+    deb http://nginx.org/packages/mainline/ubuntu/ xenial nginx
+    deb-src http://nginx.org/packages/mainline/ubuntu/ xenial nginx
+EOF'
 
 RUN apt-get update && \
 apt-get upgrade -y && \
-apt-get install nginx -y --fix-missing && \
+apt-get install jessie-backports openssl nginx -y --fix-missing && \
 apt-get remove --purge -y software-properties-common build-essential && \
 apt-get autoremove -y && \
 apt-get clean && \
