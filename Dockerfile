@@ -66,6 +66,8 @@ find /srv -type d -exec chmod 755 {} \; && \
 find /srv -type f -exec chmod 644 {} \; && \
 chown -Rf www-data:www-data /var/log/nginx
 
+EXPOSE 1025
+
 WORKDIR /srv
 
 VOLUME ["/srv"]
