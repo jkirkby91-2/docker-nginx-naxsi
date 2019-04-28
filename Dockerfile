@@ -60,18 +60,11 @@ chown -Rf www-data:www-data /var/lib/nginx && \
 chmod 777 /start.sh && \
 touch /srv/log/nginx.access.log && \
 touch /srv/log/nginx.error.log && \
-chown -Rf www-data:www-data /srv && \
 chmod 755 /srv && \
 find /srv -type d -exec chmod 755 {} \; && \
 find /srv -type f -exec chmod 644 {} \; && \
 chown -Rf www-data:www-data /var/log/nginx
 
 EXPOSE 1025
-
-WORKDIR /srv
-
-VOLUME ["/srv"]
-
-USER www-data
 
 CMD ["/bin/bash", "/start.sh"]
