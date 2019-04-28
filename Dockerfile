@@ -1,6 +1,6 @@
 FROM jkirkby91/ubuntusrvbase:latest
 
-MAINTAINER James Kirkby <info@watchoutforsnakes.co.uk>
+MAINTAINER James Kirby <nshcore@protonmail.com>
 
 RUN apt-get update && \
 apt-get upgrade -y && \
